@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<div id="content">
+    <div id="drawing"></div>
+    <div>
+        <button onclick="selectImage()">image</button>
+        <button onclick="selectRect()">rect</button>
+        <button onclick="selectLine()">line</button>
+        <button onclick="selectPolygon()">polygon</button>
+        <button onclick="selectPolyline()">polyline</button>
+        <button onclick="selectReset()">reset</button>
+    </div>
+</div>
+</body>
+
+<script src="svg.js"></script>
+<script src="svg-tools.js"></script>
+<script src="svg-tools.image.plugin.js"></script>
+<script src="svg-tools.rect.plugin.js"></script>
+<script src="svg-tools.line.plugin.js"></script>
+<script src="svg-tools.polygon.plugin.js"></script>
+<script src="svg-tools.polyline.plugin.js"></script>
+<script>
+
+    let imagePlugin = new SVGImagePlugin({
+        imageLoadPreCallBack: function () {
+            console.log("pre")
+        },
+        imageLoadPostCallBack: function () {
+            console.log("post")
+        }
+    })
+
+    let rectPlugin = new SVGRectPlugin({})
+    let linePlugin = new SVGLinePlugin({})
+    let polygonPlugin = new SVGPolygonPlugin({})
+    let polylinePlugin = new SVGPolylinePlugin({})
+
+    let svg = new SVGTool({
+        openGuideline: true,
+        guidelineColor: '#003399',
+        plugins: [
+            imagePlugin,
+            rectPlugin,
+            linePlugin,
+            polygonPlugin,
+            polylinePlugin
+        ],
+        events: {
+            deleteKey(e) {
+                console.log("delete")
+            }
+        }
+    })
+
+    imagePlugin.loadImage('http://ainote.iflytek.com/static/images/reg_bg.jpg')
+
+    // imagePlugin.loadImage('http://img.ewebweb.com/uploads/20191203/21/1575379060-LUkFxpzXIC.jpeg')
+
+    function selectImage() {
+        svg.setCreatePluginName("SVGImagePlugin")
+    }
+
+    function selectRect() {
+        svg.setCreatePluginName("SVGRectPlugin")
+    }
+
+    function selectLine() {
+        svg.setCreatePluginName("SVGLinePlugin")
+        // svg.setCreatePluginName("SVGLinePlugin", true)
+    }
+
+    function selectPolygon() {
+        svg.setCreatePluginName("SVGPolygonPlugin")
+    }
+
+    function selectPolyline() {
+        svg.setCreatePluginName("SVGPolylinePlugin")
+    }
+
+    function selectReset() {
+        svg.reset(false)
+    }
+
+</script>
+
+<style>
+    #content {
+        background-color: #eeeeee;
+        width: 100%;
+        height: 500px;
+    }
+
+    #drawing {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+</style>
+</html>
